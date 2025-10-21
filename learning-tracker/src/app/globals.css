@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+:root {
+  /* Dark Background Colors */
+  --background-primary: #0a0a0f;
+  --background-secondary: #151521;
+  --background-tertiary: #1f1f2e;
+  
+  /* Retro Accent Colors */
+  --retro-blue: #4287f5;
+  --retro-purple: #7c3aed;
+  --retro-pink: #ec4899;
+  --retro-cyan: #06b6d4;
+  
+  /* Green (LIMITED USE) */
+  --accent-green: #10b981;
+  --accent-green-dark: #059669;
+  --accent-green-light: #34d399;
+  
+  /* Status Colors */
+  --status-planned: #6366f1;
+  --status-in-progress: #f59e0b;
+  --status-completed: #10b981;
+  --status-error: #ef4444;
+}
+
+@theme inline {
+  --color-background-primary: var(--background-primary);
+  --color-background-secondary: var(--background-secondary);
+  --color-background-tertiary: var(--background-tertiary);
+  
+  --color-retro-blue: var(--retro-blue);
+  --color-retro-purple: var(--retro-purple);
+  --color-retro-pink: var(--retro-pink);
+  --color-retro-cyan: var(--retro-cyan);
+  
+  --color-accent-green: var(--accent-green);
+  --color-accent-green-dark: var(--accent-green-dark);
+  --color-accent-green-light: var(--accent-green-light);
+  
+  --color-status-planned: var(--status-planned);
+  --color-status-in-progress: var(--status-in-progress);
+  --color-status-completed: var(--status-completed);
+  --color-status-error: var(--status-error);
+  
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --border-radius-retro: 12px;
+}
+
+body {
+  background: var(--background-primary);
+  color: #ffffff;
+  font-family: 'Consolas', 'Courier New', monospace;
+  min-height: 100vh;
+}
+
+/* Pixelated button effect */
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Custom scrollbar for retro theme */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--retro-blue);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--retro-purple);
+}
+
+/* 3D Flip Card Animations */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
