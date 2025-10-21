@@ -4,6 +4,9 @@ import { useModule } from '@/lib/hooks/useModules';
 import { useFlashcards } from '@/lib/hooks/useFlashcards';
 import { FlashcardFlip } from '@/components/flashcards/FlashcardFlip';
 import { GenerateFlashcardsButton } from '@/components/flashcards/GenerateFlashcardsButton';
+import { CreateFlashcardDialog } from '@/components/flashcards/CreateFlashcardDialog';
+import { EditModuleDialog } from '@/components/modules/EditModuleDialog';
+import { DeleteModuleButton } from '@/components/modules/DeleteModuleButton';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Loader2, Sparkles, FileText, Calendar, Flag } from 'lucide-react';
 import Link from 'next/link';
@@ -40,7 +43,7 @@ export default function ModuleDetailPage({
     );
   }
 
-  const statusConfig = {
+  const statusConfig: Record<string, { color: string; bg: string }> = {
     PLANNED: { color: 'text-status-planned', bg: 'bg-status-planned/20' },
     IN_PROGRESS: { color: 'text-status-inProgress', bg: 'bg-status-inProgress/20' },
     COMPLETED: { color: 'text-accent-green', bg: 'bg-accent-green/20' },
@@ -52,13 +55,23 @@ export default function ModuleDetailPage({
     <div className="max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <Link
-          href={`/dashboard/courses/${module.course.id}`}
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors font-body text-sm mb-4"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to {module.course.title}
-        </Link>
+        <div className="flex items-center justify-between mb-4">
+          <Link
+            href={`/dashboard/courses/${module.course.id}`}
+            className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors font-body text-sm"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to {module.course.title}
+          </Link>
+          <div className="flex items-center gap-2">
+            <EditModuleDialog module={module} />
+            <DeleteModuleButton 
+              moduleId={module.id} 
+              moduleName={module.title}
+              courseId={module.course.id}
+            />
+          </div>
+        </div>
 
         <div className="bg-gradient-to-br from-background-secondary to-background-tertiary border-2 border-retro-purple rounded-2xl p-8">
           <div className="flex items-start justify-between mb-4">
@@ -117,10 +130,13 @@ export default function ModuleDetailPage({
               {flashcards?.length !== 1 ? 's' : ''} available
             </p>
           </div>
-          <GenerateFlashcardsButton
-            moduleId={params.id}
-            hasNotes={!!(module.notes && module.notes.length >= 50)}
-          />
+          <div className="flex items-center gap-2">
+            <CreateFlashcardDialog moduleId={params.id} />
+            <GenerateFlashcardsButton
+              moduleId={params.id}
+              hasNotes={!!(module.notes && module.notes.length >= 50)}
+            />
+          </div>
         </div>
 
         {!flashcards || flashcards.length === 0 ? (
@@ -133,14 +149,17 @@ export default function ModuleDetailPage({
               <p className="text-gray-400 font-body mb-6">
                 {module.notes && module.notes.length >= 50
                   ? 'Generate flashcards using AI or create them manually'
-                  : 'Add at least 50 characters of notes to use AI generation'}
+                  : 'Create flashcards manually or add 50+ characters of notes for AI generation'}
               </p>
-              {module.notes && module.notes.length >= 50 && (
-                <GenerateFlashcardsButton
-                  moduleId={params.id}
-                  hasNotes={true}
-                />
-              )}
+              <div className="flex items-center gap-2 justify-center">
+                <CreateFlashcardDialog moduleId={params.id} />
+                {module.notes && module.notes.length >= 50 && (
+                  <GenerateFlashcardsButton
+                    moduleId={params.id}
+                    hasNotes={true}
+                  />
+                )}
+              </div>
             </div>
           </div>
         ) : (

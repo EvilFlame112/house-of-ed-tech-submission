@@ -6,7 +6,7 @@ import { updateCourseSchema } from '@/lib/validations/course.schema';
 // GET single course by ID
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await getCurrentUser();
@@ -15,9 +15,11 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
+
     const course = await prisma.course.findUnique({
       where: {
-        id: params.id,
+        id,
       },
       include: {
         modules: {
@@ -58,7 +60,7 @@ export async function GET(
 // PUT update course
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await getCurrentUser();
@@ -67,9 +69,11 @@ export async function PUT(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
+
     // Check if course exists and user owns it
     const existingCourse = await prisma.course.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!existingCourse) {
@@ -84,7 +88,7 @@ export async function PUT(
     const validatedData = updateCourseSchema.parse(body);
 
     const course = await prisma.course.update({
-      where: { id: params.id },
+      where: { id },
       data: validatedData,
     });
 
@@ -111,7 +115,7 @@ export async function PUT(
 // DELETE course
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await getCurrentUser();
@@ -120,9 +124,11 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
+
     // Check if course exists and user owns it
     const existingCourse = await prisma.course.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!existingCourse) {
@@ -134,12 +140,12 @@ export async function DELETE(
     }
 
     await prisma.course.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({
       message: 'Course deleted successfully',
-      id: params.id,
+      id,
     });
   } catch (error) {
     console.error('Delete course error:', error);

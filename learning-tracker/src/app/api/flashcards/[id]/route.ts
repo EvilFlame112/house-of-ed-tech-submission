@@ -6,7 +6,7 @@ import { updateFlashcardSchema } from '@/lib/validations/flashcard.schema';
 // GET single flashcard
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await getCurrentUser();
@@ -15,8 +15,10 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
+
     const flashcard = await prisma.flashcard.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         module: {
           include: {
@@ -51,7 +53,7 @@ export async function GET(
 // PUT update flashcard
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await getCurrentUser();
@@ -60,8 +62,10 @@ export async function PUT(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
+
     const existing = await prisma.flashcard.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         module: {
           include: {
@@ -86,7 +90,7 @@ export async function PUT(
     const validatedData = updateFlashcardSchema.parse(body);
 
     const flashcard = await prisma.flashcard.update({
-      where: { id: params.id },
+      where: { id },
       data: validatedData,
     });
 
@@ -113,7 +117,7 @@ export async function PUT(
 // DELETE flashcard
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await getCurrentUser();
@@ -122,8 +126,10 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
+
     const existing = await prisma.flashcard.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         module: {
           include: {
@@ -145,12 +151,12 @@ export async function DELETE(
     }
 
     await prisma.flashcard.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({
       message: 'Flashcard deleted successfully',
-      id: params.id,
+      id,
     });
   } catch (error) {
     console.error('Delete flashcard error:', error);

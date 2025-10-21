@@ -3,6 +3,8 @@
 import { useCourse } from '@/lib/hooks/useCourses';
 import { useModules } from '@/lib/hooks/useModules';
 import { CreateModuleDialog } from '@/components/modules/CreateModuleDialog';
+import { EditCourseDialog } from '@/components/courses/EditCourseDialog';
+import { DeleteCourseButton } from '@/components/courses/DeleteCourseButton';
 import { ModuleCard } from '@/components/modules/ModuleCard';
 import { ArrowLeft, Book, Clock, TrendingUp, Loader2 } from 'lucide-react';
 import Link from 'next/link';
@@ -49,13 +51,19 @@ export default function CourseDetailPage({
     <div className="max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <Link
-          href="/dashboard/courses"
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors font-body text-sm mb-4"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Courses
-        </Link>
+        <div className="flex items-center justify-between mb-4">
+          <Link
+            href="/dashboard/courses"
+            className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors font-body text-sm"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Courses
+          </Link>
+          <div className="flex items-center gap-2">
+            <EditCourseDialog course={course} />
+            <DeleteCourseButton courseId={course.id} courseName={course.title} />
+          </div>
+        </div>
 
         <div
           className="bg-gradient-to-br from-background-secondary to-background-tertiary border-2 rounded-2xl p-8"

@@ -235,7 +235,7 @@ export default function AnalyticsPage() {
                     {module.title}
                   </div>
                   <div className="text-sm text-gray-400 font-body">
-                    {module.course?.title || 'Unknown Course'}
+                    Module
                   </div>
                 </div>
                 <div className="flex items-center gap-3">

@@ -6,7 +6,7 @@ import { updateModuleSchema } from '@/lib/validations/module.schema';
 // GET single module by ID
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await getCurrentUser();
@@ -15,8 +15,10 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
+
     const module = await prisma.module.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         course: {
           select: {
@@ -62,7 +64,7 @@ export async function GET(
 // PUT update module
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await getCurrentUser();
@@ -71,9 +73,11 @@ export async function PUT(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
+
     // Check if module exists and user owns it
     const existingModule = await prisma.module.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         course: true,
       },
@@ -104,7 +108,7 @@ export async function PUT(
     }
 
     const module = await prisma.module.update({
-      where: { id: params.id },
+      where: { id },
       data: updateData,
     });
 
@@ -131,7 +135,7 @@ export async function PUT(
 // DELETE module
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await getCurrentUser();
@@ -140,9 +144,11 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
+
     // Check if module exists and user owns it
     const existingModule = await prisma.module.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         course: true,
       },
@@ -157,12 +163,12 @@ export async function DELETE(
     }
 
     await prisma.module.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({
       message: 'Module deleted successfully',
-      id: params.id,
+      id,
     });
   } catch (error) {
     console.error('Delete module error:', error);

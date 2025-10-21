@@ -2,6 +2,15 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
+// Free tier compatible models (try in this order):
+// 1. gemini-1.5-flash-latest - Latest flash model (recommended)
+// 2. gemini-1.5-flash - Standard flash model
+// 3. gemini-pro - Older model (may be deprecated)
+// 4. models/gemini-1.5-flash-latest - Full path version
+
+// Using the latest stable version for free tier
+export const AI_MODEL = 'models/gemini-2.5-flash';
+
 export async function generateFlashcardsFromNotes(
   notes: string,
   count: number = 5
@@ -13,7 +22,7 @@ export async function generateFlashcardsFromNotes(
   }>
 > {
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    const model = genAI.getGenerativeModel({ model: AI_MODEL });
 
     const prompt = `You are a helpful study assistant. Generate exactly ${count} flashcards from the following study notes. 
 
@@ -80,4 +89,3 @@ Return ONLY the JSON array:`;
     throw new Error('Failed to generate flashcards with AI');
   }
 }
-
