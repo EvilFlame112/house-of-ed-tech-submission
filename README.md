@@ -2,9 +2,6 @@
 
 A full-stack web application for remote learning students to track their study progress and generate AI-powered flashcards.
 
-![Landing Page](screenshot1.png)
-![Dashboard](screenshot2.png)
-
 ## 🌟 Features
 
 - 📚 **Course Management** - Create and organize learning courses
@@ -15,9 +12,6 @@ A full-stack web application for remote learning students to track their study p
 - 📱 **Responsive Design** - Works on mobile, tablet, and desktop
 - 🎨 **Retro UI** - Beautiful retro-inspired interface
 
-## 🚀 Live Demo
-
-**[View Live Application](https://your-app.vercel.app)**
 
 ## 🛠️ Tech Stack
 
@@ -29,12 +23,6 @@ A full-stack web application for remote learning students to track their study p
 - **Deployment**: Vercel
 - **Testing**: Jest, Playwright
 
-## 📸 Screenshots
-
-[Add 2-3 screenshots of your app]
-
-## 🏃 Getting Started
-
 ### Prerequisites
 - Node.js 20+
 - PostgreSQL database
@@ -44,7 +32,7 @@ A full-stack web application for remote learning students to track their study p
 
 \`\`\`bash
 # Clone the repository
-git clone https://github.com/YOUR-USERNAME/learning-tracker-ai.git
+git clone https://github.com/EvilFlame112/learning-tracker-ai.git
 
 # Navigate to project
 cd learning-tracker-ai/learning-tracker
@@ -86,8 +74,8 @@ MIT License
 ## 👤 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
+- GitHub: [@EvilFlame112](https://github.com/EvilFlame112)
+- LinkedIn: [A Ramnarayan](https://linkedin.com/in/a-ramn)
 
 ## 🙏 Acknowledgments
 
