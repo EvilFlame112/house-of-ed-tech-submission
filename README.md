@@ -1,130 +1,97 @@
-# 📚 Learning Tracker - House of EdTech Assignment
+# 🎓 Learning Tracker with AI Flashcard Generation
 
-**A modern, AI-powered learning management application for remote learning students**
+A full-stack web application for remote learning students to track their study progress and generate AI-powered flashcards.
 
----
-## 📁 Project Structure
+![Landing Page](screenshot1.png)
+![Dashboard](screenshot2.png)
 
-```
-House Ed Tech proj/
-├── learning-tracker/          # Main Next.js application
-│   ├── src/                   # Source code
-│   ├── prisma/                # Database schema
-│   ├── public/                # Static assets
-│   └── README.md              # App-specific documentation
-│
-└── Documentation/             # Comprehensive guides
-    ├── START_HERE.md                      ⭐ Begin here!
-    ├── CURRENT_STATUS.md                  What's implemented
-    ├── PROJECT_COMPLETION_SUMMARY.md      Full overview
-    ├── COMPREHENSIVE_TEST_GUIDE.md        Testing procedures
-    ├── FINAL_SUBMISSION_CHECKLIST.md      Submission prep
-    ├── DEVELOPMENT_PLAN.md                Architecture guide
-    ├── API_DOCUMENTATION.md               API reference
-    ├── UI_DESIGN_GUIDE.md                 Design system
-    ├── PROJECT_STRUCTURE.md               File organization
-    ├── ENV_SETUP_GUIDE.md                 Environment setup
-    ├── GETTING_STARTED.md                 Detailed setup
-    └── WHATS_BEEN_BUILT.md                Feature list
-```
+## 🌟 Features
 
----
+- 📚 **Course Management** - Create and organize learning courses
+- 📖 **Module Tracking** - Track learning modules with status and progress
+- 🤖 **AI Flashcards** - Generate flashcards automatically using Google Gemini
+- 📊 **Analytics Dashboard** - Monitor study progress and patterns
+- 🔐 **Secure Authentication** - JWT-based authentication with NextAuth.js
+- 📱 **Responsive Design** - Works on mobile, tablet, and desktop
+- 🎨 **Retro UI** - Beautiful retro-inspired interface
 
-## 🚀 Quick Start (3 Steps)
+## 🚀 Live Demo
 
-### 1. Setup (If not done already)
-```bash
-cd learning-tracker
+**[View Live Application](https://your-app.vercel.app)**
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes, Prisma ORM
+- **Database**: PostgreSQL (Supabase)
+- **Authentication**: NextAuth.js v5
+- **AI**: Google Gemini API
+- **Deployment**: Vercel
+- **Testing**: Jest, Playwright
+
+## 📸 Screenshots
+
+[Add 2-3 screenshots of your app]
+
+## 🏃 Getting Started
+
+### Prerequisites
+- Node.js 20+
+- PostgreSQL database
+- Google Gemini API key
+
+### Installation
+
+\`\`\`bash
+# Clone the repository
+git clone https://github.com/YOUR-USERNAME/learning-tracker-ai.git
+
+# Navigate to project
+cd learning-tracker-ai/learning-tracker
+
+# Install dependencies
 npm install
-# Set up .env file (see ENV_SETUP_GUIDE.md)
+
+# Set up environment variables
+cp .env.example .env.local
+# Edit .env.local with your credentials
+
+# Push database schema
 npm run db:push
-```
 
-### 2. Run
-```bash
+# Run development server
 npm run dev
-```
+\`\`\`
 
-### 3. Test
-Visit http://localhost:3000 and register!
+Visit http://localhost:3000
 
----
+## 🧪 Testing
 
-## ✅ What's Working NOW
+\`\`\`bash
+# Run unit tests
+npm test
 
-- ✅ User authentication (register/login)
-- ✅ Protected dashboard
-- ✅ Course creation & management
-- ✅ Full backend API (courses, modules, flashcards)
-- ✅ Database connected (PostgreSQL/Supabase)
-- ✅ AI integration ready (Google Gemini)
-- ✅ Beautiful retro-inspired UI
-- ✅ Responsive design
+# Run E2E tests
+npm run test:e2e
+\`\`\`
 
-**Test it now:** http://localhost:3000
+## 📦 Deployment
 
----
+This project is deployed on Vercel. Push to `main` branch for automatic deployment.
 
-## 🎯 Assignment Requirements
+## 📄 License
 
-### ✅ Core Requirements (All Met!)
+MIT License
 
-| Requirement | Status |
-|-------------|--------|
-| Next.js 15 with TypeScript | ✅ |
-| Tailwind CSS | ✅ |
-| PostgreSQL + Prisma | ✅ |
-| NextAuth.js | ✅ |
-| CRUD Operations | ✅ |
-| AI Integration (Gemini) | ✅ |
-| Zod Validation | ✅ |
-| Security Measures | ✅ |
-| Responsive Design | ✅ |
-| ESLint + Prettier | ✅ |
+## 👤 Author
 
----
+**Your Name**
+- GitHub: [@yourusername](https://github.com/yourusername)
+- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
 
-## 🧪 Test It Now
+## 🙏 Acknowledgments
 
-```bash
-# 1. Start the app
-cd learning-tracker
-npm run dev
-
-# 2. Visit in browser
-http://localhost:3000
-
-# 3. Register & create a course
-
-# 4. View database
-npm run db:studio
-```
-
----
-
-## 📊 Tech Stack
-
-- **Frontend:** Next.js 15, TypeScript, Tailwind CSS, Radix UI
-- **Backend:** Next.js API Routes, Prisma ORM
-- **Database:** PostgreSQL (Supabase)
-- **Auth:** NextAuth.js v5
-- **AI:** Google Generative AI (Gemini)
-- **Validation:** Zod
-- **State:** React Query
-
----
-
-## 🎨 Features
-
-- 🔐 Secure authentication with password hashing
-- 📚 Course management with progress tracking
-- 📖 Module organization with status tracking
-- 🎴 AI-generated flashcards from notes
-- ⏱️ Study session tracking (API ready)
-- 📊 Analytics dashboard (basic stats)
-- 🎨 Retro-inspired pixel UI
-- 📱 Fully responsive design
-- ♿ Accessible components (Radix UI)
-
----
-
+- Google Gemini for AI capabilities
+- Radix UI for accessible components
+- Vercel for hosting
+\`\`\`

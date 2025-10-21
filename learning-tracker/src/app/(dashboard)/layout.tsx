@@ -91,9 +91,9 @@ export default function DashboardLayout({
               Learning Tracker © 2025 | Built for remote learning students
             </p>
             <div className="flex items-center gap-4 text-sm font-body">
-              <span className="text-gray-400">Created by: Your Name</span>
+              <span className="text-gray-400">Created by: A Ramnarayan</span>
               <a
-                href="https://github.com/yourusername"
+                href="https://github.com/EvilFlame112"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-retro-blue hover:text-retro-cyan transition-colors"
@@ -101,7 +101,7 @@ export default function DashboardLayout({
                 GitHub
               </a>
               <a
-                href="https://linkedin.com/in/yourprofile"
+                href="https://linkedin.com/in/a-ramn"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-retro-blue hover:text-retro-cyan transition-colors"
