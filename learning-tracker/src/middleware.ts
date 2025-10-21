@@ -5,11 +5,18 @@ export const config = {
 export function middleware(request: Request) {
   const url = new URL(request.url);
   const cookies = request.headers.get('cookie') || '';
-  const hasSession = cookies.includes('next-auth.session-token') || 
-                     cookies.includes('__Secure-next-auth.session-token');
+  
+  // Check for NextAuth session token (both HTTP and HTTPS variants)
+  const hasSession = cookies.includes('next-auth.session-token=') || 
+                     cookies.includes('__Secure-next-auth.session-token=');
 
   if (!hasSession) {
-    return Response.redirect(new URL(`/login?callbackUrl=${encodeURIComponent(url.pathname)}`, request.url));
+    const loginUrl = new URL('/login', request.url);
+    loginUrl.searchParams.set('callbackUrl', url.pathname);
+    return Response.redirect(loginUrl);
   }
+  
+  // Continue to the requested page if session exists
+  return undefined;
 }
 

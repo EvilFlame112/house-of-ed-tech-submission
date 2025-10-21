@@ -30,9 +30,10 @@ export default function LoginPage() {
         return;
       }
 
-      // Redirect to dashboard on success
-      router.push('/dashboard');
-      router.refresh();
+      if (result?.ok) {
+        // Redirect to dashboard on success
+        window.location.href = '/dashboard';
+      }
     } catch (error) {
       setError('An error occurred. Please try again.');
       setIsLoading(false);
