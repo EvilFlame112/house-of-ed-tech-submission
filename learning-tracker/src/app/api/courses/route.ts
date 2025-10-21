@@ -4,7 +4,7 @@ import { getCurrentUser } from '@/lib/get-session';
 import { createCourseSchema } from '@/lib/validations/course.schema';
 
 // GET all courses for the authenticated user
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const user = await getCurrentUser();
 
@@ -44,7 +44,7 @@ export async function GET(request: Request) {
       ).length;
       const planned = course.modules.filter((m) => m.status === 'PLANNED').length;
 
-      const { modules, ...courseData } = course;
+      const { modules: _modules, ...courseData } = course;
 
       return {
         ...courseData,
@@ -90,18 +90,20 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(course, { status: 201 });
-  } catch (error: any) {
-    if (error.name === 'ZodError') {
+  } catch (error: unknown) {
+    const err = error as Error;
+    if (err.name === 'ZodError') {
+      const zodError = error as unknown as { errors: unknown[] };
       return NextResponse.json(
         {
           error: 'Validation error',
-          issues: error.errors,
+          issues: zodError.errors,
         },
         { status: 400 }
       );
     }
 
-    console.error('Create course error:', error);
+    console.error('Create course error:', err);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

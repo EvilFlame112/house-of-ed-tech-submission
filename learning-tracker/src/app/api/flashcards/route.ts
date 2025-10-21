@@ -67,14 +67,14 @@ export async function POST(request: Request) {
     const validatedData = createFlashcardSchema.parse(body);
 
     // Verify user owns the module
-    const module = await prisma.module.findUnique({
+    const learningModule = await prisma.module.findUnique({
       where: { id: validatedData.moduleId },
       include: {
         course: true,
       },
     });
 
-    if (!module || module.course.userId !== user.id) {
+    if (!learningModule || learningModule.course.userId !== user.id) {
       return NextResponse.json(
         { error: 'Module not found or access denied' },
         { status: 403 }
@@ -86,18 +86,20 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(flashcard, { status: 201 });
-  } catch (error: any) {
-    if (error.name === 'ZodError') {
+  } catch (error: unknown) {
+    const err = error as Error;
+    if (err.name === 'ZodError') {
+      const zodError = error as unknown as { errors: unknown[] };
       return NextResponse.json(
         {
           error: 'Validation error',
-          issues: error.errors,
+          issues: zodError.errors,
         },
         { status: 400 }
       );
     }
 
-    console.error('Create flashcard error:', error);
+    console.error('Create flashcard error:', err);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

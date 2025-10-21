@@ -93,18 +93,20 @@ export async function PUT(
     });
 
     return NextResponse.json(course);
-  } catch (error: any) {
-    if (error.name === 'ZodError') {
+  } catch (error: unknown) {
+    const err = error as Error;
+    if (err.name === 'ZodError') {
+      const zodError = error as unknown as { errors: unknown[] };
       return NextResponse.json(
         {
           error: 'Validation error',
-          issues: error.errors,
+          issues: zodError.errors,
         },
         { status: 400 }
       );
     }
 
-    console.error('Update course error:', error);
+    console.error('Update course error:', err);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

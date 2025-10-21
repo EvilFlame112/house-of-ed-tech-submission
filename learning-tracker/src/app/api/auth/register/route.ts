@@ -49,11 +49,12 @@ export async function POST(request: Request) {
       },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Registration error:', error);
-    
-    if (error.name === 'ZodError') {
-      const errorMessages = error.errors.map((err: any) => ({
+
+    if (error instanceof Error && error.name === 'ZodError') {
+      const zodError = error as unknown as { errors: Array<{ path: string[]; message: string }> };
+      const errorMessages = zodError.errors.map((err) => ({
         field: err.path.join('.'),
         message: err.message,
       }));
@@ -68,7 +69,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { error: error.message || 'Internal server error' },
+      { error: error instanceof Error ? error.message : 'Internal server error' },
       { status: 500 }
     );
   }

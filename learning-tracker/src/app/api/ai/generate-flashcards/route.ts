@@ -16,14 +16,14 @@ export async function POST(request: Request) {
     const validatedData = generateFlashcardsSchema.parse(body);
 
     // Fetch module with notes
-    const module = await prisma.module.findUnique({
+    const learningModule = await prisma.module.findUnique({
       where: { id: validatedData.moduleId },
       include: {
         course: true,
       },
     });
 
-    if (!module || module.course.userId !== user.id) {
+    if (!learningModule || learningModule.course.userId !== user.id) {
       return NextResponse.json(
         { error: 'Module not found or access denied' },
         { status: 403 }
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     }
 
     // Check if module has notes
-    if (!module.notes || module.notes.trim().length < 50) {
+    if (!learningModule.notes || learningModule.notes.trim().length < 50) {
       return NextResponse.json(
         {
           error:
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
 
     // Generate flashcards using AI
     const generatedFlashcards = await generateFlashcardsFromNotes(
-      module.notes,
+      learningModule.notes,
       validatedData.count
     );
 
@@ -67,21 +67,23 @@ export async function POST(request: Request) {
       count: savedFlashcards.length,
       message: `Successfully generated ${savedFlashcards.length} flashcards`,
     });
-  } catch (error: any) {
-    if (error.name === 'ZodError') {
+  } catch (error: unknown) {
+    const err = error as Error;
+    if (err.name === 'ZodError') {
+      const zodError = error as unknown as { errors: unknown[] };
       return NextResponse.json(
         {
           error: 'Validation error',
-          issues: error.errors,
+          issues: zodError.errors,
         },
         { status: 400 }
       );
     }
 
-    console.error('Generate flashcards error:', error);
+    console.error('Generate flashcards error:', err);
     return NextResponse.json(
       {
-        error: error.message || 'Failed to generate flashcards',
+        error: err.message || 'Failed to generate flashcards',
       },
       { status: 500 }
     );

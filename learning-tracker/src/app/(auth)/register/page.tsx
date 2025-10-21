@@ -42,7 +42,7 @@ export default function RegisterPage() {
       if (!response.ok) {
         // Show detailed validation errors if available
         if (data.details && Array.isArray(data.details)) {
-          const errorMsg = data.details.map((d: any) => d.message).join('. ');
+          const errorMsg = data.details.map((d: { message: string }) => d.message).join('. ');
           throw new Error(errorMsg);
         }
         throw new Error(data.error || 'Registration failed');
@@ -64,9 +64,10 @@ export default function RegisterPage() {
       // Redirect to dashboard
       router.push('/dashboard');
       router.refresh();
-    } catch (error: any) {
-      console.error('Registration error:', error);
-      setError(error.message || 'An error occurred. Please try again.');
+      } catch (error: unknown) {
+        const err = error as Error;
+        console.error('Registration error:', err);
+        setError(err.message || 'An error occurred. Please try again.');
       setIsLoading(false);
     }
   };
