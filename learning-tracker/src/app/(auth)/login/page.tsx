@@ -24,6 +24,8 @@ export default function LoginPage() {
         redirect: false,
       });
 
+      console.log('Sign in result:', result);
+
       if (result?.error) {
         setError('Invalid email or password');
         setIsLoading(false);
@@ -31,10 +33,16 @@ export default function LoginPage() {
       }
 
       if (result?.ok) {
+        // Small delay to ensure session is set
+        await new Promise(resolve => setTimeout(resolve, 500));
         // Redirect to dashboard on success
         window.location.href = '/dashboard';
+      } else {
+        setError('Sign in failed. Please try again.');
+        setIsLoading(false);
       }
     } catch (error) {
+      console.error('Login error:', error);
       setError('An error occurred. Please try again.');
       setIsLoading(false);
     }
